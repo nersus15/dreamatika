@@ -142,9 +142,10 @@ class user extends controller
         $data['rule'] = $this->model('Angkatan_model')->getRule();
         $data['script'] = ' $(".a ").prop("disabled", true);';
         $data['script2'] = ' $(".on ").prop("disabled", false);';
+        $data['matkul'] = $this->model('Matkul_model')->getMatkul();
 
         if ($params[0] === 'matkul') {
-            $this->view('user/input_matkul');
+            $this->view('user/input_matkul', $data);
         } else if ($params[0] === 'pendaftaran') {
             if ($data['jadwal']['count'] > 0) {
                 $this->view('user/pendaftaran_peserta', $data);
@@ -253,16 +254,18 @@ class user extends controller
     public function addMatkul($data)
     {
         $data = $_POST;
-        $dataMatkul = $this->model('Matkul_model')->getMatkul();
+        $dataMatkul = $this->model('Matkul_model')->getSingleMatkul();
         $matkul['id'] = '';
         $id = '';
         if ($dataMatkul['rowCount'] == 0) {
-            $id = "MK001";
+            $id = "MK1";
         } else {
-            $matkul['id'] = explode('MTK', $dataMatkul['id']);
+            $matkul['id'] = explode('MK', $dataMatkul['matkul']['id']);
+            $curentId = (int) $matkul['id'][1];
+            $curentId += 1;
+            $curentId = (string) $curentId;
             $id = "MK";
-            var_dump($matkul);
-            die;
+            $id .= $curentId;
         }
         $data['newMatkul'] = [
             "id" => $id,
@@ -272,5 +275,29 @@ class user extends controller
 
         ];
         $this->model('Matkul_model')->addMatkul($data['newMatkul']);
+        $_SESSION['log'] = [
+            'aksi' => 'Menambah Matkul Baru dengan Id: ' . $id,
+            'user' => $_SESSION['user_data']['nama']
+        ];
+        $this->model('User_model')->addlog();
+    }
+    public function deleteMatkul($matkul)
+    {
+
+        if (count($matkul) == 0) {
+            $this->model('Matkul_model')->deleteAll();
+            $_SESSION['log'] = [
+                'aksi' => 'Menghapus Semua Matkul',
+                'user' => $_SESSION['user_data']['nama']
+            ];
+            $this->model('User_model')->addlog();
+        } else {
+            $this->model('Matkul_model')->deleteById($matkul);
+            $_SESSION['log'] = [
+                'aksi' => 'Menghapus Matkul dengan id:' . $matkul[0],
+                'user' => $_SESSION['user_data']['nama']
+            ];
+            $this->model('User_model')->addlog();
+        }
     }
 }
