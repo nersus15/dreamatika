@@ -1,12 +1,3 @@
-<!-- Start Nav -->
-<nav aria-label="breadcrumb">
-    <ol class="breadcrumb">
-        <li class="breadcrumb-item active" aria-current="page">Login</li>
-        <li class="breadcrumb-item"><a href="<?= BASEURL . '/user/register' ?>">Daftar</a></li>
-    </ol>
-</nav>
-<!-- End Nav -->
-
 <!-- Start -->
 <div class=" d-flex justify-content-center">
     <h6>Gelombang 1 Telah Berakhir</h6>
@@ -22,15 +13,14 @@
         <div class="col w-320px">
             <img src="<?= BASEURL . '/asset/logo/dreamatika_ellipse.png' ?>" alt="" width="60px" height="60px">
             <h1 class="h3 font-weight-bold merriweather mt-3 p-1 signin">Sign In</h1>
-            <p class="text-secondary h8 mt-1 mb-1">Masuk untuk melanjutkan belajar</p>
-            <form action="">
+            <form action="<?= BASEURL . '/akun/login' ?>" method="POST">
                 <div class="row mt-4">
                     <div class="col-auto ">
                         <div class="input-group mb-2">
                             <div class="input-group-prepend">
                                 <div class="input-group-text"> <i class="fas fa-user"></i></div>
                             </div>
-                            <input type="text" class="form-control" style="width: 250px" id="inlineFormInputGroup" placeholder="Username / Nama">
+                            <input type="email" name='email' class="form-control" style="width: 250px" id="inlineFormInputGroup" placeholder="Email">
                         </div>
                     </div>
                 </div>
@@ -40,18 +30,15 @@
                             <div class="input-group-prepend">
                                 <div class="input-group-text"> <i class="fas fa-unlock-alt"></i></div>
                             </div>
-                            <input type="password" class="form-control" style="width: 250px" id="inlineFormInputGroup" placeholder="Password / Nim">
+                            <input type="password" name='password' class="form-control" style="width: 250px" id="inlineFormInputGroup" placeholder="Password / Nim">
                         </div>
                     </div>
                 </div>
                 <div class="row mt-5">
+                    <div><?= flasher::flash(); ?></div>
                     <div class="col">
-                        <a href="index.html">
-
-                            <button type="button" class="btn btn-primary btn-block active text-white" style="width: 285px">Login
-                                Akun
-                                Saya</button>
-                        </a>
+                        <button type="submit" class="btn btn-primary btn-block active text-white" style="width: 285px">Login Akun Saya
+                        </button>
                     </div>
                 </div>
 
