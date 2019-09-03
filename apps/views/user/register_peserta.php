@@ -1,13 +1,3 @@
-<body>
-    <!-- Navbar Start -->
-    <nav aria-label="breadcrumb">
-        <ol class="breadcrumb">
-            <li class="breadcrumb-item"><a href="<?= BASEURL . '/user' ?>">Login</a></li>
-            <li class="breadcrumb-item active" aria-current="page">Daftar</li>
-        </ol>
-    </nav>
-    <!-- Navbar end -->
-
     <!-- start -->
     <div class="container mt-5">
         <div class=" row ">
