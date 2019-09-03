@@ -32,14 +32,12 @@ class Matkul_model
         $this->DB->bind('semester', $data['semester']);
         $this->DB->bind('jurusan', $data['jurusan']);
         $this->DB->execute();
-        header('Location:' . BASEURL . '/user/settings');
     }
     public function deleteAll()
     {
         $query = "delete from tbl_matkul";
         $this->DB->query($query);
         $this->DB->execute();
-        header('Location:' . BASEURL . '/user/settings');
     }
     public function deleteById($id)
     {
@@ -47,6 +45,5 @@ class Matkul_model
         $this->DB->query($query);
         $this->DB->bind('id', $id[0]);
         $this->DB->execute();
-        header('Location:' . BASEURL . '/user/settings');
     }
 }

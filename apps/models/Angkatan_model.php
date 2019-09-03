@@ -17,7 +17,7 @@ class Angkatan_model
         }
         $query = "INSERT into tbl_angkatan(`tahun`,`start_date`,`semester`)VALUES(:tahun, :startDate, :semester)";
         $this->DB->query($query);
-        $this->DB->bind('tahun', $date[2]);
+        $this->DB->bind('tahun', $date[0]);
         $this->DB->bind('startDate', $data['start_day']);
         $this->DB->bind('semester', $semester);
         $this->DB->execute();
@@ -45,5 +45,13 @@ class Angkatan_model
         $this->DB->query($query);
         $this->DB->execute();
         return $this->DB->resultSet();
+    }
+    public function update($params)
+    {
+        $this->cekJadwal();
+        $query = "Update tbl_angkatan set " . $params['key'] . "=:value";
+        $this->DB->query($query);
+        $this->DB->bind('value', $params['value']);;
+        $this->DB->execute();
     }
 }

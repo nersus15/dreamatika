@@ -177,6 +177,14 @@ class user extends controller
                 $this->DB->query($query);
                 $this->DB->bind('jpg', $data['jeda']);
                 $this->DB->execute();
+                $_SESSION['log'] = [
+                    'aksi' => 'Set jadwal pendaftaran',
+                    'user' => $_SESSION['user_data']['nama']
+                ];
+                $this->model('User_model')->addlog();
+                $matkulCount = $this->model('Matkul_model')->getMatkul();
+                $paramsforUpdate = ["key" => 'total_matkul', "value" => count($matkulCount)];
+                $this->model('Angkatan_model')->update($paramsforUpdate);
                 header('location:' . BASEURL . '/user/settings');
             }
         } else {
@@ -280,6 +288,10 @@ class user extends controller
             'user' => $_SESSION['user_data']['nama']
         ];
         $this->model('User_model')->addlog();
+        $matkulCount = $this->model('Matkul_model')->getMatkul();
+        $paramsforUpdate = ["key" => 'total_matkul', "value" => count($matkulCount)];
+        $this->model('Angkatan_model')->update($paramsforUpdate);
+        header('Location:' . BASEURL . '/user/settings');
     }
     public function deleteMatkul($matkul)
     {
@@ -291,6 +303,9 @@ class user extends controller
                 'user' => $_SESSION['user_data']['nama']
             ];
             $this->model('User_model')->addlog();
+            $matkulCount = $this->model('Matkul_model')->getMatkul();
+            $paramsforUpdate = ["key" => 'total_matkul', "value" => count($matkulCount)];
+            $this->model('Angkatan_model')->update($paramsforUpdate);
         } else {
             $this->model('Matkul_model')->deleteById($matkul);
             $_SESSION['log'] = [
@@ -298,6 +313,10 @@ class user extends controller
                 'user' => $_SESSION['user_data']['nama']
             ];
             $this->model('User_model')->addlog();
+            $matkulCount = $this->model('Matkul_model')->getMatkul();
+            $paramsforUpdate = ["key" => 'total_matkul', "value" => count($matkulCount)];
+            $this->model('Angkatan_model')->update($paramsforUpdate);
         }
+        header('Location:' . BASEURL . '/user/settings');
     }
 }
