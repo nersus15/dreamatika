@@ -95,7 +95,7 @@
                 </div>
             </form>
             <div class="row ml-5 col " style="margin-top: 20px">
-                <img src="<?= BASEURL . '/asset/img/background/Group 202.png' ?>" alt="" width="500px" height="500px">
+                <img src="<?= BASEPATH . '/asset/img/background/Group 202.png' ?>" alt="" width="500px" height="500px">
             </div>
         </div>
     </div>

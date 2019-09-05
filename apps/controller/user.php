@@ -28,7 +28,7 @@ class user extends controller
         $data['pageTitle'] = 'Admin | Create New Account';
         $this->view('header/user_panel', $data);
         $this->view('navigasi/userpanel', $data);
-        $this->view('user/neAccount', $data);
+        $this->view('user/newAccount', $data);
         $this->view('footer/user');
     }
     public function register($data)
