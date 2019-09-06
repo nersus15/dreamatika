@@ -7,7 +7,7 @@ if ($data['isRead']) : ?>
             <h5 class="card-title"><?= $_SESSION['user_data']['nama']; ?></h5>
             <p class="card-text">id: <?= $_SESSION['user_data']['id']; ?></p>
             <p class="card-text">email: <?= $_SESSION['user_data']['email']; ?></p>
-            <p class="card-text">role: <?= $_SESSION['user_data']['role_id']; ?></p>
+            <p class="card-text">role: <?= $data['role'] ?></p>
             <p class="card-text">Password: <?= $_SESSION['user_data']['password']; ?></p>
             <a href="<?= BASEURL . '/user/editprofile'; ?>" class="btn btn-primary">edit profile</a>
         </div>

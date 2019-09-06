@@ -7,88 +7,43 @@ class user extends controller
         if (!isset($_SESSION['login'])) {
             header('Location: ' . BASEURL . '/akun');
         }
-
-        $data['account'] = $_SESSION['user_data'];
-        $data['user_menu'] = $this->model('User_model')->getUserMenu();
-        $data['pageTitle'] = 'User | Dashboard';
-        $this->view('header/user_panel', $data);
-        $this->view('navigasi/userpanel', $data);
-        $this->view('user/dashboard');
-        $this->view('footer/user');
-    }
-    public function new_account()
-    {
-        if (!isset($_SESSION['login'])) {
-            header('Location: ' . BASEURL . '/akun');
+        if ($_SESSION['user_data']['role_id'] != 3) {
+            header('Location: ' . BASEURL . '/admin');
         }
-
-        $data['account'] = $_SESSION['user_data'];
-        $data['role'] = $this->model('User_model')->getRole();
-        $data['user_menu'] = $this->model('User_model')->getUserMenu();
-        $data['pageTitle'] = 'Admin | Create New Account';
-        $this->view('header/user_panel', $data);
-        $this->view('navigasi/userpanel', $data);
-        $this->view('user/newAccount', $data);
-        $this->view('footer/user');
+        if ($_SESSION['user_data']['role_id'] == 3) {
+            header('Location: ' . BASEURL . '/peserta');
+        }
     }
-    public function register($data)
+    public function new_account($data)
     {
-        $akun = $this->model('User_model')->Akun($_SESSION['user_data']['email']);
-        $data = $_POST;
-        if ($data['Email'] == $akun['email']) {
-            flasher::setFlash('Gagal, Email sudah terdaftar', 'danger');
-            header('location:' . BASEURL . '/user/new_account');
-        } else if ($data['FullName'] == $akun['nama']) {
-            flasher::setFlash('Gagal, Username sudah digunakan', 'danger');
-            header('location:' . BASEURL . '/user/new_account');
-        } elseif (strlen($data['Password']) < 8) {
-            flasher::setFlash('Gagal, Karakter Password kurang dari 8', 'danger');
-            header('location:' . BASEURL . '/user/new_account');
-        } elseif ($data['Password'] != $data['Password2']) {
-            flasher::setFlash('Gagal, Password tidak cocok', 'danger');
-            header('location:' . BASEURL . '/user/new_account');
+        $data['inputan'] = $_POST;
+        $data['akun'] = $this->model('User_model')->akun($data['inputan']['Email']);
+        if ($this->helper('user_registration')->newAccount($data) == false) {
+            header('location:' . BASEURL . '/admin/new_account');
         } else {
-            $this->model('User_model')->register($data);
+            $this->model('User_model')->register($data['inputan']);
             $_SESSION['log'] = [
                 'aksi' => 'Create Akun Baru',
                 'user' => $_SESSION['user_data']['nama']
             ];
             $this->model('User_model')->addlog();
-            flasher::setFlash('Akun Baru Berhasil ditambahkan', 'success');
-            header('location:' . BASEURL . '/user/new_account');
         }
+        header('location:' . BASEURL . '/admin/new_account');
     }
-    public function settings($params)
-    {
-        // Mengecek apakah user sudah login atau belum
-        if (!isset($_SESSION['login'])) {
-            header('Location: ' . BASEURL . '/akun');
-        }
 
-        $data['jadwal'] = $this->model('Angkatan_model')->cekJadwal();
-        $data['rule'] = $this->model('Angkatan_model')->getRule();
-        $data['account'] = $_SESSION['user_data'];
-        $data['user_menu'] = $this->model('User_model')->getUserMenu();
-        $data['pageTitle'] = 'User | Dashboard';
-
-        $data['script'] = ' $(".a ").prop("disabled", true);';
-        $data['script2'] = ' $(".on ").prop("disabled", false);';
-
-        $this->view('header/user_panel', $data);
-        $this->view('navigasi/userpanel', $data);
-        $this->view('navigasi/setting_topbar');
-        if ($data['jadwal']['count'] > 0) {
-            $this->view('footer/user', $data);
-        } else {
-            $this->view('footer/user');
-        };
-    }
     public function profile()
     {
         // Mengecek apakah user sudah login atau belum
         if (!isset($_SESSION['login'])) {
             header('Location: ' . BASEURL . '/akun');
         }
+        $this->DB = new database();
+        $query = "SELECT * FROM user_role WHERE id =:id";
+        $this->DB->query($query);
+        $this->DB->bind('id', $_SESSION['user_data']['role_id']);
+        $role = $this->DB->single();
+        $data['role'] = $role['role'];
+
 
         $data['user_menu'] = $this->model('User_model')->getUserMenu();
         $data['account'] = $_SESSION['user_data'];
@@ -126,86 +81,10 @@ class user extends controller
             flasher::setFlash('Gagal, Password berbeda', 'danger');
             header('location: ' . BASEURL . '/user/editprofile');
         } else {
-
             $this->model('User_model')->editprofile($data);
         }
     }
-    public function changeSetting($params)
-    {
-        // Mengecek apakah user sudah login atau belum
-        if (!isset($_SESSION['login'])) {
-            header('Location: ' . BASEURL . '/akun');
-        }
 
-        $data['account'] = $_SESSION['user_data'];
-        $data['jadwal'] = $this->model('Angkatan_model')->cekJadwal();
-        $data['rule'] = $this->model('Angkatan_model')->getRule();
-        $data['script'] = ' $(".a ").prop("disabled", true);';
-        $data['script2'] = ' $(".on ").prop("disabled", false);';
-        $data['matkul'] = $this->model('Matkul_model')->getMatkul();
-
-        if ($params[0] === 'matkul') {
-            $this->view('user/input_matkul', $data);
-        } else if ($params[0] === 'pendaftaran') {
-            if ($data['jadwal']['count'] > 0) {
-                $this->view('user/pendaftaran_peserta', $data);
-            } else {
-                $this->view('user/pendaftaran_peserta');
-            };
-        }
-    }
-    public function setJadwal($data)
-    {
-        // Mengecek apakah user sudah login atau belum
-        if (!isset($_SESSION['login'])) {
-            header('Location: ' . BASEURL . '/akun');
-        }
-        $this->DB = new database;
-        $data = $_POST;
-        $start = strtotime($data['start_day']);
-        $now = strtotime(date('d-m-Y', time()));
-        if ($start >= $now) {
-            if ($this->model('Angkatan_model')->setJadwal($data) > 0) {
-                flasher::setFlash('Berhasil', 'success');
-                // Update tbl_rule id=1 (day/ Gelombang)
-                $query = "UPDATE tbl_rule set `value`=:dpg where id=1";
-                $this->DB->query($query);
-                $this->DB->bind('dpg', $data['day_in_gelombang']);
-                $this->DB->execute();
-                // Update tbl_rule id=2 (jeda/ Gelombang)
-                $query = "UPDATE tbl_rule set `value`=:jpg where id=2";
-                $this->DB->query($query);
-                $this->DB->bind('jpg', $data['jeda']);
-                $this->DB->execute();
-                $_SESSION['log'] = [
-                    'aksi' => 'Set jadwal pendaftaran',
-                    'user' => $_SESSION['user_data']['nama']
-                ];
-                $this->model('User_model')->addlog();
-                $matkulCount = $this->model('Matkul_model')->getMatkul();
-                $paramsforUpdate = ["key" => 'total_matkul', "value" => count($matkulCount)];
-                $this->model('Angkatan_model')->update($paramsforUpdate);
-                header('location:' . BASEURL . '/user/settings');
-            }
-        } else {
-            flasher::setFlash('Gagal, Start day harus sama atau lebih besar dari hari ini', 'danger');
-            header('location:' . BASEURL . '/user/settings');
-        }
-    }
-    public function deletejadwal()
-    {
-        // Mengecek apakah user sudah login atau belum
-        if (!isset($_SESSION['login'])) {
-            header('Location: ' . BASEURL . '/akun');
-        }
-        $this->model('Angkatan_model')->deleteJadwal();
-        $_SESSION['log'] = [
-            'aksi' => 'hapus jadwal pendaftaran',
-            'user' => $_SESSION['user_data']['nama']
-        ];
-        $this->model('User_model')->addlog();
-        header('location:' . BASEURL . '/user/settings');
-    }
     public function log()
     {
         // Mengecek apakah user sudah login atau belum
@@ -251,72 +130,12 @@ class user extends controller
                     foreach ($data['log'] as $log) : ?>
                 <tr>
                     <td><?= $log['tgl']; ?></td>
-                    <td><?= date('h:i:s', $log['time']); ?></td>
+                    <td><?= date('H:i:s', $log['time']); ?></td>
                     <td><?= $log['aksi']; ?></td>
                     <td><?= $log['user']; ?></td>
                 </tr>
             <?php endforeach ?>
         </table>
 <?php
-    }
-    public function addMatkul($data)
-    {
-        $data = $_POST;
-        $dataMatkul = $this->model('Matkul_model')->getSingleMatkul();
-        $matkul['id'] = '';
-        $id = '';
-        if ($dataMatkul['rowCount'] == 0) {
-            $id = "MK1";
-        } else {
-            $matkul['id'] = explode('MK', $dataMatkul['matkul']['id']);
-            $curentId = (int) $matkul['id'][1];
-            $curentId += 1;
-            $curentId = (string) $curentId;
-            $id = "MK";
-            $id .= $curentId;
-        }
-        $data['newMatkul'] = [
-            "id" => $id,
-            "namaMatkul" => $data['matkul'],
-            "semester" => $data['semester'],
-            "jurusan" => $data['jurusan'],
-
-        ];
-        $this->model('Matkul_model')->addMatkul($data['newMatkul']);
-        $_SESSION['log'] = [
-            'aksi' => 'Menambah Matkul Baru dengan Id: ' . $id,
-            'user' => $_SESSION['user_data']['nama']
-        ];
-        $this->model('User_model')->addlog();
-        $matkulCount = $this->model('Matkul_model')->getMatkul();
-        $paramsforUpdate = ["key" => 'total_matkul', "value" => count($matkulCount)];
-        $this->model('Angkatan_model')->update($paramsforUpdate);
-        header('Location:' . BASEURL . '/user/settings');
-    }
-    public function deleteMatkul($matkul)
-    {
-
-        if (count($matkul) == 0) {
-            $this->model('Matkul_model')->deleteAll();
-            $_SESSION['log'] = [
-                'aksi' => 'Menghapus Semua Matkul',
-                'user' => $_SESSION['user_data']['nama']
-            ];
-            $this->model('User_model')->addlog();
-            $matkulCount = $this->model('Matkul_model')->getMatkul();
-            $paramsforUpdate = ["key" => 'total_matkul', "value" => count($matkulCount)];
-            $this->model('Angkatan_model')->update($paramsforUpdate);
-        } else {
-            $this->model('Matkul_model')->deleteById($matkul);
-            $_SESSION['log'] = [
-                'aksi' => 'Menghapus Matkul dengan id:' . $matkul[0],
-                'user' => $_SESSION['user_data']['nama']
-            ];
-            $this->model('User_model')->addlog();
-            $matkulCount = $this->model('Matkul_model')->getMatkul();
-            $paramsforUpdate = ["key" => 'total_matkul', "value" => count($matkulCount)];
-            $this->model('Angkatan_model')->update($paramsforUpdate);
-        }
-        header('Location:' . BASEURL . '/user/settings');
     }
 }

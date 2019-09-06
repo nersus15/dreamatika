@@ -14,15 +14,7 @@ class akun extends  controller
         $this->view('user/login_user');
         $this->view('footer/login_user');
     }
-    public function register()
-    {
-        $data['pageTitle'] = 'Peserta | Register';
-        $data['Path'] = 'register';
-        $this->view('header/login_user', $data);
-        $this->view('navigasi/akun_navbar', $data);
-        $this->view('user/register_peserta');
-        $this->view('footer/login_user');
-    }
+
     public function login()
     {
         $data = $_POST;

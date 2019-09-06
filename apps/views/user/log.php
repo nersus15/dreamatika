@@ -50,7 +50,7 @@
         foreach ($data['log'] as $log) : ?>
             <tr>
                 <td><?= $log['tgl']; ?></td>
-                <td><?= date('h:i:s', $log['time']); ?></td>
+                <td><?= date('H:i:s', $log['time']); ?></td>
                 <td><?= $log['aksi']; ?></td>
                 <td><?= $log['user']; ?></td>
             </tr>

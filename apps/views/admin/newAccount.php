@@ -11,7 +11,7 @@
                         <div class="text-center">
                             <h1 class="h4 text-gray-900 mb-4">Create New Account!</h1>
                         </div>
-                        <form class="user" method="POST" action="<?= BASEURL . '/user/register'; ?>">
+                        <form class="user" method="POST" action="<?= BASEURL . '/user/new_account'; ?>">
                             <div class="form-group row">
                                 <div class="col-sm">
                                     <input type="text" class="form-control form-control" name="FullName" id="FirstName" required placeholder="Full Name">
