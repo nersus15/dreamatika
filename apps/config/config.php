@@ -1,5 +1,6 @@
 <?php
-define('BASEURL', 'http://localhost/dreamatika/public');
+define('BASEURL', 'http://localhost/dreamatika');
+define('BASEPATH', 'http://localhost/dreamatika/public');
 define('DB_HOST', 'localhost');
 define('DB_USER', 'root');
 define('DB_PASS', '');

@@ -29,7 +29,7 @@
             </div>
             <hr>
         </div>
-        <form action="<?= BASEURL . '/user/setJadwal' ?>" method="POST">
+        <form action="<?= BASEURL . '/admin/setJadwal' ?>" method="POST">
             <div class="form-group row">
                 <label for="start-date" class="col-sm-2 col-form-label">Start Day:</label>
                 <div class="col-xsm">

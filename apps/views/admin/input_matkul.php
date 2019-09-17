@@ -9,7 +9,7 @@
                  </button>
              </div>
              <div class="modal-body">
-                 <form method="POST" action="<?= BASEURL . '/user/addMatkul' ?>">
+                 <form method="POST" action="<?= BASEURL . '/admin/addMatkul' ?>">
                      <div class="form-group row mr-8">
                          <label for="start-date" class="col-sm-5 col-form-label">Nama Mata Kuliah:</label>
                          <div class="col-sm">
@@ -51,7 +51,7 @@
              <div class="modal-body">Apakah Anda Yakin Ingin Menghapus Semua Mata Kuliah</div>
              <div class="modal-footer">
                  <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
-                 <a class="btn btn-danger on" href="<?= BASEURL . '/user/deleteMatkul' ?>">Hapus</a>
+                 <a class="btn btn-danger on" href="<?= BASEURL . '/admin/deleteMatkul' ?>">Hapus</a>
              </div>
          </div>
      </div>
@@ -82,7 +82,7 @@
                  <td><?= $matkul['nama_matkul'] ?></td>
                  <td><?= $matkul['semester'] ?></td>
                  <td><?= $matkul['jurusan'] ?></td>
-                 <td><a class="btn btn-danger btn-sm" href="<?= BASEURL . '/user/deleteMatkul/' . $matkul['id'] ?>">Hapus</a></td>
+                 <td><a class="btn btn-danger btn-sm" href="<?= BASEURL . '/admin/deleteMatkul/' . $matkul['id'] ?>">Hapus</a></td>
              </tr>
          <?php endforeach ?>
      </table>

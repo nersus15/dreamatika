@@ -19,7 +19,7 @@
                             <div class="h5 mb-0 font-weight-bold text-gray-800">30 Peserta</div>
                         </div>
                         <div class="col-auto">
-                            <img class="img-profile rounded-circle" src="<?= BASEURL . '/asset/logo/dreamatika.jpg' ?>" width="60" height="60">
+                            <img class="img-profile rounded-circle" src="<?= BASEPATH . '/asset/logo/dreamatika.jpg' ?>" width="60" height="60">
                         </div>
                     </div>
                 </div>
@@ -37,7 +37,7 @@
                             <div class="h5 mb-0 font-weight-bold text-gray-800">40 Peserta</div>
                         </div>
                         <div class="col-auto">
-                            <img class="img-profile rounded-circle" src="<?= BASEURL . '/asset/logo/sbd.png' ?>" width="65" height="50">
+                            <img class="img-profile rounded-circle" src="<?= BASEPATH . '/asset/logo/sbd.png' ?>" width="65" height="50">
                         </div>
                     </div>
                 </div>

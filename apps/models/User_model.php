@@ -7,6 +7,13 @@ class User_model
     {
         $this->DB = new database;
     }
+    public function getAllUser()
+    {
+        $query = "SELECT * FROM user ";
+        $this->DB->query($query);
+        $account = $this->DB->resultSet();
+        return $account;
+    }
     public function login($data)
     {
         $email = strtolower(stripslashes($data['email']));
@@ -160,25 +167,26 @@ class User_model
             flasher::setFlash('Gagal, size file yang dipilih terlalu besar', 'danger');
             header('location: ' . BASEURL . '/user/editprofile');
         } else {
-            $nama_image = uniqid();
+            $nama_image = uniqId();
             $nama_image .= ".";
             $nama_image .= $format_file;
-            move_uploaded_file($tmp, '../public/asset/img/profile/' . $nama_image);
+            move_uploaded_file($tmp, 'public/asset/img/profile/' . $nama_image);
             if ($_SESSION['user_data']['image'] != 'default.jpg') {
-                unlink('../public/asset/img/profile/' . $_SESSION['user_data']['image']);
+                unlink('public/asset/img/profile/' . $_SESSION['user_data']['image']);
             }
             return $nama_image;
         }
     }
     public function register($data)
     {
-
+        // persiapan
+        $id = uniqid();
         $password = password_hash($data['Password'], PASSWORD_DEFAULT);
         $email = $data['Email'];
         $name = $data['FullName'];
-        $id = uniqid();
         $tgl_buat = time();
         $role_id = $data['role'];
+        // query mysql
         $query = "INSERT into user(`id`,`nama`,`email`,`password`,`tgl_buat`,`role_id`, `image`)VALUES(:id, :nama, :email,:pass, :tgl,:role_id, 'default.jpg')";
         $this->DB->query($query);
         $this->DB->bind('nama', $name);
@@ -189,6 +197,7 @@ class User_model
         $this->DB->bind('role_id', $role_id);
         $this->DB->execute();
     }
+
     public function filterLog($param1, $param2)
     {
 

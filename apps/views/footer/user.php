@@ -1,10 +1,10 @@
-<script src="<?= BASEURL . '/asset/vendor/jquery/jquery.js' ?>"></script>
-<script src="<?= BASEURL . '/asset/vendor/jquery-easing/jquery.easing.js' ?>"></script>
-<script src="<?= BASEURL . '/asset/vendor/bootstrap/js/bootstrap.js' ?>"></script>
-<script src="<?= BASEURL . '/asset/vendor/fontawesome/js/all.js' ?>"></script>
-<script src="<?= BASEURL . '/asset/js/popper.min.js' ?>"></script>
-<script src="<?= BASEURL . '/asset/js/sb-admin-2.js' ?>"></script>
-<script src="<?= BASEURL . '/asset/js/script.js' ?>"></script>
+<script src="<?= BASEPATH . '/asset/vendor/jquery/jquery.js' ?>"></script>
+<script src="<?= BASEPATH . '/asset/vendor/jquery-easing/jquery.easing.js' ?>"></script>
+<script src="<?= BASEPATH . '/asset/vendor/bootstrap/js/bootstrap.js' ?>"></script>
+<script src="<?= BASEPATH . '/asset/vendor/fontawesome/js/all.js' ?>"></script>
+<script src="<?= BASEPATH . '/asset/js/popper.min.js' ?>"></script>
+<script src="<?= BASEPATH . '/asset/js/sb-admin-2.js' ?>"></script>
+<script src="<?= BASEPATH . '/asset/js/script.js' ?>"></script>
 
 <?php if (isset($data['jadwal'])) : ?>
     <script>

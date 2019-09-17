@@ -2,62 +2,45 @@
 <div id="wrapper">
 
     <!-- Sidebar -->
-    <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
+    <ul class=" navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
 
         <!-- Sidebar - Brand -->
         <a class="sidebar-brand d-flex align-items-center justify-content-center" href="<?= BASEURL . '/admin/dashboard' ?>">
             <div class="sidebar-brand-icon rotate-n-15">
-                <img class="img-profile rounded-circle" src="<?= BASEURL . '/asset/logo/u.jpg' ?>" width="60" height="60">
+                <img class="img-profile rounded-circle" src="<?= BASEPATH . '/asset/logo/dreamatika.png' ?>" width="60" height="60">
             </div>
             <div class="sidebar-brand-text mx-3">Dreamatika team <sup>2</sup></div>
         </a>
-
         <!-- Divider -->
-        <hr class="sidebar-divider my-0">
-
-        <?php foreach ($data['user_menu'] as $m) : ?>
-
-            <div class="sidebar-heading">
-                <?= $m['menu']; ?>
-            </div>
-
-            <?Php
-                $this->DB = new database;
-                $menuId = $m['id'];
-                $querySubmenu = "SELECT * FROM sub_menu where menu_id=$menuId and is_active=1";
-                $this->DB->query($querySubmenu);
-                $this->DB->execute();
-                $subMenu = $this->DB->resultSet();
-                ?>
-            <?php foreach ($subMenu as $sm) : ?>
-                <li class="nav-item">
-                    <a class="nav-link" href="<?= BASEURL . $sm['url'] ?>">
-                        <i class="<?= $sm['icon']; ?>"></i>
-                        <span><?= $sm['title']; ?></span></a>
-                </li>
-
+        <hr class="sidebar-divider">
+        <div style="padding:0;" class="sidebar">
+            <?php foreach ($_SESSION['sidebarMenu'] as $menu) : ?>
+                <?php foreach ($menu as $m) : ?>
+                    <li class="nav-item">
+                        <a class=" nav-link" href="<?= BASEURL . $m['url'] ?>">
+                            <i class="<?= $m['icon']; ?>"></i>
+                            <span><?= $m['title']; ?></span></a>
+                    </li>
+                <?php endforeach ?>
             <?php endforeach ?>
-            <!-- Divider -->
-            <hr class="sidebar-divider d-none d-md-block">
-        <?php endforeach ?>
-        <?php if ($data['account']['role_id'] == 1) : ?>
-            <li class="nav-item">
-                <a class="nav-link" href="<?= BASEURL; ?>/user/log">
-                    <i class="fas fa-fw fa-tachometer-alt"></i>
-                    <span>Log Aktivitas</span></a>
-            </li>
-        <?php elseif ($data['account']['role_id'] == 2) : ?>
-            <li class="nav-item">
-                <a class="nav-link" href="<?= BASEURL; ?>/pengajar/log">
-                    <i class="fas fa-fw fa-tachometer-alt"></i>
-                    <span>Log Aktivitas</span></a>
-            </li>
-        <?php endif ?>
-        <!-- Sidebar Toggler (Sidebar) -->
-        <div class="text-center d-none d-md-inline">
-            <button class="rounded-circle border-0" id="sidebarToggle"></button>
+            <?php if ($data['account']['role_id'] == 1) : ?>
+                <li class="nav-item">
+                    <a class="nav-link" href="<?= BASEURL; ?>/user/log">
+                        <i class="fas fa-fw fa-tachometer-alt"></i>
+                        <span>Log Aktivitas</span></a>
+                </li>
+            <?php elseif ($data['account']['role_id'] == 2) : ?>
+                <li class="nav-item">
+                    <a class="nav-link" href="<?= BASEURL; ?>/pengajar/log">
+                        <i class="fas fa-fw fa-tachometer-alt"></i>
+                        <span>Log Aktivitas</span></a>
+                </li>
+            <?php endif ?>
+            <!-- Sidebar Toggler (Sidebar) -->
+            <div class="text-center">
+                <button class="rounded-circle border-0" id="sidebarToggle"></button>
+            </div>
         </div>
-
     </ul>
     <!-- End of Sidebar -->
     <div id="content-wrapper" class="d-flex flex-column">
@@ -96,7 +79,7 @@
                     <li class="nav-item dropdown no-arrow">
                         <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                             <span class="mr-2 d-none d-lg-inline text-gray-600 small"><?= $data['account']['nama']; ?></span>
-                            <img class="img-profile rounded-circle" src="<?= BASEURL . '/asset/img/profile/' . $data['account']['image'] ?>">
+                            <img class="img-profile rounded-circle" src="<?= BASEPATH . '/asset/img/profile/' . $data['account']['image'] ?>">
                         </a>
                         <!-- Dropdown - User Information -->
                         <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="userDropdown">

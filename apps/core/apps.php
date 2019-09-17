@@ -8,11 +8,11 @@ class apps
     {
         $url = $this->parseURL();
         //cek apakah ada file kontroller dengan nama sesuai di url
-        if (file_exists('../apps/controller/' . $url[0] . '.php')) {
+        if (file_exists('apps/controller/' . $url[0] . '.php')) {
             $this->controller = $url[0];
             unset($url[0]);
         }
-        require_once '../apps/controller/' . $this->controller . '.php';
+        require_once 'apps/controller/' . $this->controller . '.php';
         $this->controller = new $this->controller;
 
 
