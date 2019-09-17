@@ -116,7 +116,7 @@
 
             }
         }
-        ajax.open('GET', '<?= BASEURL . ' / admin / changeSetting     / ' ?>' + params + '/', true);
+        ajax.open('GET', '<?= BASEURL . '/admin /changeSetting/' ?>' + params + '/', true);
 
 
         ajax.send();

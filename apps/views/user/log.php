@@ -78,7 +78,7 @@
                 container.innerHTML = ajax.responseText;
             }
         }
-        ajax.open('GET', '<?= BASEURL . ' / user / filterLog / ' ?>' + userId + '/' + tgl, true);
+        ajax.open('GET', '<?= BASEURL . '/user/filterLog/' ?>' + userId + '/' + tgl, true);
         ajax.send();
     }
 </script>
