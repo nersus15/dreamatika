@@ -4,23 +4,14 @@ class peserta extends controller
 
     public function index()
     {
-        if (isset($_SESSION['login'])) {
-            $data['account'] = $_SESSION['user_data'];
-            $data['user_menu'] = $this->model('User_model')->getUserMenu();
-            $data['pageTitle'] = 'User | Dashboard';
-            $this->view('header/peserta', $data);
-            $this->view('navigasi/peserta_navbar', $data);
-            $this->view('peserta/index');
-            $this->view('footer/login_user');
-        } else {
-            $data['pageTitle'] = 'Peserta | Register';
-            $data['Path'] = 'daftar';
-            $data['matkul'] = $this->model('Matkul_model')->getMatkul();
-            $this->view('header/login_user', $data);
-            $this->view('navigasi/akun_navbar', $data);
-            $this->view('peserta/register_peserta', $data);
-            $this->view('footer/login_user');
+        if (isset($_SESSION['login']) && $_SESSION['user_data']['role_id'] == 3) {
+            $data['akun'] = $_SESSION['user_data'];
         }
+        $data['pageTitle'] = 'Dreamatika | Home';
+        $this->view('header/peserta', $data);
+        $this->view('navigasi/peserta_navbar', $data);
+        $this->view('main/index');
+        $this->view('footer/login_user');
     }
     public function register()
     {

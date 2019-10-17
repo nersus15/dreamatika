@@ -1,7 +1,7 @@
 <?php
 class apps
 {
-    protected $controller = "user";
+    protected $controller = "peserta";
     protected $method = "index";
     protected $parameter = [];
     public function __construct()
