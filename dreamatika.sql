@@ -213,8 +213,7 @@ CREATE TABLE `user` (
 INSERT INTO `user` (`id`, `nama`, `email`, `password`, `image`, `role_id`, `tgl_buat`) VALUES
 ('5ccd27fba8af7', 'Fathurrahman', 'fathur.ashter15@gmail.com', '$2y$10$snkGcTCVAPvFUn4Bt3W6XegHyg.V4iN8JH8VFgIToCyEIdrUXn/wG', 'Fathurrahman5d7230578218b.jpg', 1, 1556948987),
 ('5d163404b049b', 'Hendri Jayadi', 'Hendri.j@gmail.com', '$2y$10$2i3.dxH5Z6YeJuMskRP9kOff/dhLPCm8DJQ0ppP3GKEgK1Hz9tJty', 'default.jpg', 2, 1561736196),
-('5d725167e9735', 'Fathurrahman1710530203', 'tester@mail.com', '$2y$10$uF.LrTKF5/f1vYWtJSxECej2l.W9VxlBmPY620LlmpAAZUyO7kBvW', 'default.jpg', 3, 1567773032),
-('5d726dbd7a6ab', 'Wiwin Mistiani1710530202', 'wiwinmistiani356@gmail.com', '$2y$10$SxuXBWOq2W3epRqckLGNkeSqbqtOoIOkqgzibFh1dB5NxFP0YQXWy', 'default.jpg', 3, 1567780285);
+('5d725167e9735', 'Fathurrahman1710530203', 'tester@mail.com', '$2y$10$uF.LrTKF5/f1vYWtJSxECej2l.W9VxlBmPY620LlmpAAZUyO7kBvW', 'default.jpg', 3, 1567773032);
 
 -- --------------------------------------------------------
 
